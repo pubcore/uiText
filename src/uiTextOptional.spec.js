@@ -1,4 +1,4 @@
-import {uiTextOptional} from './uiText'
+import {uiTextOptional} from '../uiText'
 import {expect} from 'chai'
 import {isMissingTextkey} from './logMissingTextkey'
 

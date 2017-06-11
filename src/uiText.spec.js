@@ -1,7 +1,7 @@
 import {expect} from 'chai'
-import uiText from './uiText'
+import uiText from '../uiText'
 import {isMissingTextkey} from './logMissingTextkey'
-import {initLogMissingTextkey} from './logMissingTextkey'
+import {initLogMissingTextkey} from '../uiText'
 import FakeXMLHTTPRequests from 'fakexmlhttprequest'
 
 const T = {
