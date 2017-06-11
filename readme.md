@@ -6,6 +6,12 @@ used to look up the text to show.
 An other benefit is to decouple developer work from content management work,
 if texts are not known at time of development.
 
+## Configuration
+    import {initLogMissingTextkey} from 'pubcore-ui-text'
+
+    //enable post log-infos, if there are missing text-keys
+    initLogMissingTextkey({postUri:'https://xyz.com/')
+
 ## Examples
 
     import uiText from 'pubcore-ui-text'

@@ -1,5 +1,7 @@
 import replace from './replace'
 
+export {initLogMissingTextkey} from './logMissingTextkey'
+
 export default (T, key, arg3, arg4) => {
     return replace({
         text:T[key],
