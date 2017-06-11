@@ -1,5 +1,5 @@
 {
-  "name": "clubcore-ui-text",
+  "name": "pubcore-ui-text",
   "version": "1.0.0",
   "description": "map text-keys to text",
   "main": "index.js",
