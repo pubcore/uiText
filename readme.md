@@ -10,7 +10,7 @@ if texts are not known at time of development.
     import {initLogMissingTextkey} from 'pubcore-ui-text'
 
     //enable post log-infos, if there are missing text-keys
-    initLogMissingTextkey({postUri:'https://xyz.com/')
+    initLogMissingTextkey({postUri:'https://xyz.com/'})
 
 ## Examples
 
