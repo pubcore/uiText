@@ -1,0 +1,34 @@
+{
+  "name": "clubcore-ui-text",
+  "version": "1.0.0",
+  "description": "map text-keys to text",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --watch --compilers js:babel-core/register src/**/*.spec.js",
+    "build": "babel src/uiText.js --out-file index.js",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pubcore/uiText.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pubcore/uiText/issues"
+  },
+  "homepage": "https://github.com/pubcore/uiText#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.2",
+    "chai": "^4.0.2",
+    "fakexmlhttprequest": "0.0.1",
+    "mocha": "^3.4.2",
+    "pubcore-http": "^1.0.3"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}
