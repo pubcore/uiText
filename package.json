@@ -1,6 +1,6 @@
 {
   "name": "pubcore-ui-text",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "map text-keys to text",
   "main": "index.js",
   "scripts": {
