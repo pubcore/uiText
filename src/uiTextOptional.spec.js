@@ -1,5 +1,5 @@
-import {uiTextOptional} from '../uiText'
 import {expect} from 'chai'
+import {uiTextOptional} from './index'
 import {isMissingTextkey} from './logMissingTextkey'
 
 describe('uiTextOptional ' + new Date(), ()=>{

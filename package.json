@@ -2,10 +2,10 @@
   "name": "pubcore-ui-text",
   "version": "1.0.5",
   "description": "map text-keys to text",
-  "main": "index.js",
+  "main": "js/index.js",
   "scripts": {
     "test": "mocha --watch --compilers js:babel-core/register src/**/*.spec.js",
-    "build": "babel uiText.js --out-file index.js",
+    "build": "babel src -d js",
     "prepublish": "npm run build"
   },
   "repository": {
