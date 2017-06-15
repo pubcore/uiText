@@ -3,32 +3,32 @@ import post from 'pubcore-http'
 var missingTextkeys = {},
     missingTextkeyData = {},
     missingTextkeyTimer,
-    postUri, timeout = 1000, postUriCallback
+    config = {
+        postUri:'',
+        timeout:3000
+    },
+    requestCount = 0
 
-var postStatus = () => post(postUri, missingTextkeyData).then(
+var postStatus = () => post(config.postUri, missingTextkeyData).then(
     response => {
         missingTextkeyData = {}
         missingTextkeys = {}
     }
 )
+
 const startPostMissingTextkeyTimer = () => {
     if(missingTextkeyTimer){
         clearTimeout(missingTextkeyTimer)
     }
-
-    if(timeout){
-        missingTextkeyTimer = setTimeout(postStatus, timeout)
-    }else{
-        postStatus()
-    }
+    missingTextkeyTimer = setTimeout(postStatus, config.timeout)
 }
 
-export const isMissingTextkey = (key) => {
+export const isMissingTextkey = key => {
     return missingTextkeys[key] || false
 }
 
-export const initLogMissingTextkey = config => {
-    ({postUri, timeout} = config)
+export const initLogMissingTextkey = c => {
+    config = {...config, ...c}
 }
 
 export default (key, replacement, defaultText) => {
@@ -37,6 +37,14 @@ export default (key, replacement, defaultText) => {
         missingTextkeyData[key] = (defaultText || key) + (replacement ?
                 ' ' + JSON.stringify(replacement)
                 : '')
-        postUri && startPostMissingTextkeyTimer()
+
+        if(config.postUri && requestCount < 1){
+            requestCount++
+            if(config.timeout === 0){
+                postStatus()
+            }else if (config.timeout > 0){
+                startPostMissingTextkeyTimer()
+            }
+        }
     }
 }
