@@ -16,7 +16,7 @@ if texts are not known at time of development.
 
     import uiText from 'pubcore-ui-text'
 
-    //some example data with a text-key "content" and it's text string having
+    //example-data with text-key "content" and it's text string having
     //one replacement-tag "count":
     var T = {
         content: '{count} item(s)'

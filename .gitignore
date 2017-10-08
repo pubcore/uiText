@@ -4,5 +4,3 @@ yarn-error.log*
 node_modules/
 # Optional npm cache directory
 .npm
-index.js
-js
