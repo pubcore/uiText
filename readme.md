@@ -30,4 +30,4 @@ if texts are not known at time of development.
     //output: "Found 2 words"
 
 ## codepen example
-https://codepen.io/dominixdesign/pen/VMXGbX?editors=0010
+https://codepen.io/pubcore/pen/JrLaap
