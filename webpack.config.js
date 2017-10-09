@@ -4,6 +4,7 @@ module.exports = {
 		path: __dirname + "/dist",
 		filename: "uiText.js",
 		libraryTarget: "var",
-		library: "uiText"
+		library: "uiText",
+		libraryExport: "default"
 	}
 };
