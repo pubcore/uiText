@@ -28,3 +28,6 @@ if texts are not known at time of development.
     //we can add some inline default text:
     console.log( uiText(T, 'word_count', 'Found {count} words', {count:2}) )
     //output: "Found 2 words"
+
+## codepen example
+https://codepen.io/dominixdesign/pen/VMXGbX?editors=0010
