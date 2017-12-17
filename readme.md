@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pubcore/uiText.svg?branch=master)](https://travis-ci.org/pubcore/uiText)
+
 # Map keys to text with replacement-tag support
 To support multilingual user interfaces one option is to use key-value lists
 of texts. Instead of writing the text directly into a document, a text-key is
