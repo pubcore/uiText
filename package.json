@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register src/**/*.spec.js",
     "build": "babel src --out-dir js --ignore spec.js",
-    "pack": "npm run build && webpack --optimize-minimize",
+    "pack": "npm run build && webpack --mode=productionn",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -20,23 +20,24 @@
   },
   "homepage": "https://github.com/pubcore/uiText#readme",
   "dependencies": {
-    "pubcore-http": "^1.0.3"
+    "pubcore-http": "^1.0.5"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-env": "^1.5.2",
-    "chai": "^4.0.2",
-    "eslint": "^4.8.0",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
     "fakexmlhttprequest": "0.0.1",
-    "mocha": "^3.4.2",
-    "webpack": "^3.0.0"
+    "mocha": "^5.1.1",
+    "webpack": "^4.8.2",
+    "webpack-cli": "^2.1.3"
   },
   "babel": {
     "presets": [

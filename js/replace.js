@@ -21,9 +21,8 @@ exports.default = function (_ref) {
 
 		if (noDataForReplacement.length) {
 			/*eslint-disable no-console*/
-			console.warn('No data for replacement(s): ' + noDataForReplacement.join(', ')
+			console.warn('No data for replacement(s): ' + noDataForReplacement.join(', '));
 			/*eslint-enalbe no-console*/
-			);
 		}
 	}
 
