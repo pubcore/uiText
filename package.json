@@ -4,7 +4,7 @@
   "description": "map text-keys to text",
   "main": "js/uiText.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register src/**/*.spec.js",
+    "test": "mocha --require babel-core/register src/**/*.spec.js",
     "build": "babel src --out-dir js --ignore spec.js",
     "pack": "npm run build && webpack --mode=productionn",
     "prepublish": "npm run build"
