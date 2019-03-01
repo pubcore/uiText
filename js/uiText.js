@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.uiTextOptional = exports.initLogMissingTextkey = undefined;
+exports.uiTextOptional = exports.isDefaultTextModeEnabled = exports.initDefaultTexts = exports.initLogMissingTextkey = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -13,6 +13,21 @@ Object.defineProperty(exports, 'initLogMissingTextkey', {
 	enumerable: true,
 	get: function get() {
 		return _logMissingTextkey.initLogMissingTextkey;
+	}
+});
+
+var _validateTextkey = require('./validateTextkey');
+
+Object.defineProperty(exports, 'initDefaultTexts', {
+	enumerable: true,
+	get: function get() {
+		return _validateTextkey.initDefaultTexts;
+	}
+});
+Object.defineProperty(exports, 'isDefaultTextModeEnabled', {
+	enumerable: true,
+	get: function get() {
+		return _validateTextkey.isDefaultTextModeEnabled;
 	}
 });
 

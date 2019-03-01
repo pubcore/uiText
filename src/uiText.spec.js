@@ -1,7 +1,8 @@
 import {expect} from 'chai'
 import FakeXMLHTTPRequests from 'fakexmlhttprequest'
-import uiText, {initLogMissingTextkey} from './uiText'
+import uiText, {initLogMissingTextkey,initDefaultTexts,isDefaultTextModeEnabled} from './uiText'
 import {isMissingTextkey} from './logMissingTextkey'
+import defaultTexts from './test/defaultTexts.json'
 
 const T = {
 	foo: 'bar'
@@ -16,7 +17,8 @@ global.XMLHttpRequest = function () {
 
 describe('uiText, ' + new Date(), () => {
 	beforeEach(() => {
-		requests = []
+		requests = [],
+		initDefaultTexts()
 	})
 
 	it('logs text-keys which did not exist', () => {
@@ -47,5 +49,44 @@ describe('uiText, ' + new Date(), () => {
 		uiText({}, 'aKey', 'a default text {count}', {count: 5})
 		expect(requests.length).to.equal(1)
 		expect(JSON.parse(requests[0].requestBody).aKey).to.equal('a default text {count} {"count":5}')
+	})
+
+	it('use component default text config mode, if default text data is set', () => {
+		initDefaultTexts(defaultTexts)
+		expect(isDefaultTextModeEnabled()).to.be.true
+		expect(uiText({'required_textkey1_static':'is configured {replacement}'},'required_textkey1_static',{replacement:'replacement'})).to.be.equal('is configured replacement')
+		expect(uiText({},'required_textkey1_static',{replacement:'replacement'})).to.be.equal('required textkey1 static replacement')
+		expect(uiText({},'required_textkey1_static','required textkey1 static {replacement}',{replacement:'replacement'})).to.be.equal('required textkey1 static replacement')
+		expect(() => uiText({},{0:'required_textkey1_static'},{replacement:'replacement'})).to.throw('ERROR_KEY_INVALID')
+		expect(() => uiText({},'required_textkey1_static','diffrent code default',{replacement:'replacement'})).to.throw('ERROR_DEFAULT_TEXT_CONFLICT [required_textkey1_static]')
+		expect(() => uiText({},['required_textkey1_static',''],{replacement:'replacement'})).to.throw('ERROR_WRONG_KEY_USE_OR_DYNAMIC_KEY_DECLARATION [required_textkey1_static]')
+		expect(() => uiText({},'no_default_text_key')).to.throw('ERROR_NO_DEFAULT_DEFINED')
+		expect(uiText({},['required_textkey2_dynamic_prefix','_postfix'],{postfix:'postfix'})).to.be.equal('required textkey2 dynamic postfix')
+		expect(uiText({},'no_default_text_key','some default {replacement}',{replacement:'replacement'})).to.be.equal('some default replacement')
+		expect(() => uiText({},'required_textkey1_static','different default {replacement}',{replacement:'replacement'})).to.throw('ERROR_DEFAULT_TEXT_CONFLICT [required_textkey1_static]')
+	})
+
+	it('test optional texts, use component default text config mode, if default text data is set', () => {
+		initDefaultTexts(defaultTexts)
+		expect(uiText({'optional_textkey1_prefix':'is configured {replacement}'},'optional_textkey1_prefix',{replacement:'replacement'})).to.be.equal('is configured replacement')
+		expect(uiText({},'optional_textkey1_prefix',{replacement:'replacement'})).to.be.equal('')
+		expect(uiText({}, 'optional_textkey1_prefix', 'optional textkey1 {postfix}', {postfix: 'postfix'})).to.equal('optional textkey1 postfix')
+		expect(uiText(
+			{optional_textkey2_dynamicdefault_prefix_postfix:'optional textkey2 dynamic {replacement}'},
+			['optional_textkey2_dynamicdefault_prefix','_postfix'],
+			{replacement:'postfix'}
+		)).to.be.equal('optional textkey2 dynamic postfix')
+		expect(
+			() => uiText(
+				{optional_textkey2_dynamicdefault_prefix_postfix:'optional textkey2 dynamic {replacement}'},
+				['optional_textkey2_dynamicdefault_prefix','_postfix'],
+				'wrong default',
+				{replacement:'postfix'}
+			)).to.throw('ERROR_DEFAULT_TEXT_CONFLICT [optional_textkey2_dynamicdefault_prefix]')
+		expect(uiText(
+			{},
+			['optional_textkey2_dynamicdefault_prefix','_postfix'],
+			{replacement:'postfix'}
+		)).to.be.equal('')
 	})
 })
