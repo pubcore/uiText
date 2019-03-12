@@ -1,4 +1,4 @@
-import autoupdateDefaultText from './autoupdateDefaultText'
+import autoupdateDefaultTexts, {isAutoupdateDefaultTextsEnabled} from './autoupdateDefaultTexts'
 
 var config = {
 	autoupdateUri: '',
@@ -6,7 +6,6 @@ var config = {
 }
 
 export const initDefaultTexts = (defaultTexts) => config.defaultTexts = defaultTexts
-export const initAutoupdate = (autoupdateUri) => config.autoupdateUri = autoupdateUri
 export const isDefaultTextModeEnabled = () => typeof config.defaultTexts == 'object'
 
 export default ({T,key,defaultText,isDev}) => {
@@ -42,7 +41,7 @@ export default ({T,key,defaultText,isDev}) => {
 			optional,
 			dynamic
 		}
-		config.autoupdateUri && autoupdateDefaultText(config.defaultTexts)
+		isAutoupdateDefaultTextsEnabled() && autoupdateDefaultTexts(config.defaultTexts[prefix])
 	}
 
 

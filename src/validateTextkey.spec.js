@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import defaultTexts from './test/defaultTexts.json'
-import validateTextkey, {initDefaultTexts,isDefaultTextModeEnabled,initAutoupdate} from './validateTextkey'
+import validateTextkey, {initDefaultTexts,isDefaultTextModeEnabled} from './validateTextkey'
+import {initAutoupdateDefaultTexts} from './autoupdateDefaultTexts'
 
 describe('validateTextkey, ' + new Date(), () => {
 
@@ -124,7 +125,7 @@ describe('validateTextkey, ' + new Date(), () => {
 		).to.deep.equal({text:undefined,key:'unknown_new',defaultText:'some default {replacement}'})
 	})
 	it('validateTextkey(unknown_new key with defaultText) should return defaultText and update defaultTexts on server side', () => {
-		initAutoupdate('some/uri')
+		initAutoupdateDefaultTexts({postUri:'some/uri'})
 		expect(
 			validateTextkey({T:{},key:'unknown_new_to_update',defaultText:'some updated new default {replacement}',isDev:true})
 		).to.deep.equal({text:undefined,key:'unknown_new_to_update',defaultText:'some updated new default {replacement}'})

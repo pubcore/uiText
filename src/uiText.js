@@ -4,6 +4,7 @@ import uiTextV2 from './uiTextV2'
 
 export {initLogMissingTextkey} from './logMissingTextkey'
 export {initDefaultTexts, isDefaultTextModeEnabled} from './validateTextkey'
+export {initAutoupdateDefaultTexts} from './autoupdateDefaultTexts'
 
 export default (T, key, arg3, arg4) => {
 	if (isDefaultTextModeEnabled()) {
