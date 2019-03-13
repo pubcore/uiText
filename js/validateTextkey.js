@@ -1,49 +1,90 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
-exports.isDefaultTextModeEnabled = exports.initDefaultTexts = undefined;
+exports.default = exports.isDefaultTextModeEnabled = exports.initDefaultTexts = void 0;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _autoupdateDefaultTexts = _interopRequireWildcard(require("./autoupdateDefaultTexts"));
 
-var _pubcoreHttp = require('pubcore-http');
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-var _pubcoreHttp2 = _interopRequireDefault(_pubcoreHttp);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var config = {
-	defaultTextsUri: '',
-	defaultTexts: {}
+  autoupdateUri: '',
+  defaultTexts: undefined
 };
 
-var initDefaultTexts = exports.initDefaultTexts = function initDefaultTexts(c) {
-	config = _extends({}, config, c);
-
-	console.log(config.defaultTextsUri);
-
-	(0, _pubcoreHttp2.default)(config.defaultTextsUri, null, 'GET').then(function (response) {
-		config.defaultTexts = JSON.parse(response);
-
-		console.log('config.defaultTexts');
-		console.log(config.defaultTexts);
-	}, function (error) {
-		console.log('error');
-		console.log(error);
-	});
+var initDefaultTexts = function initDefaultTexts(defaultTexts) {
+  return config.defaultTexts = defaultTexts;
 };
 
-var isDefaultTextModeEnabled = exports.isDefaultTextModeEnabled = function isDefaultTextModeEnabled() {
-	return config.defaultTextsUri != '';
+exports.initDefaultTexts = initDefaultTexts;
+
+var isDefaultTextModeEnabled = function isDefaultTextModeEnabled() {
+  return _typeof(config.defaultTexts) == 'object';
 };
 
-exports.default = function (key, replacement, defaultText) {
-	if (isDefaultTextModeEnabled()) {
-		if (!config.defaultTexts.required && !config.defaultTexts.optional) {
-			throw 'defaultTexts doesnt contains require nor optional section';
-		} else if (!config.defaultTexts.required[key] && !defaultText) {
-			throw 'There is no default text for key ' + key;
-		}
-	}
+exports.isDefaultTextModeEnabled = isDefaultTextModeEnabled;
+
+var _default = function _default(_ref) {
+  var T = _ref.T,
+      key = _ref.key,
+      defaultText = _ref.defaultText,
+      isDev = _ref.isDev;
+  var prefix = '',
+      postfix = '',
+      dynamic = false,
+      tmpDynamic = false,
+      optional = false,
+      tmpDefaultText = defaultText;
+  isDev = isDev === true ? true : false;
+
+  if (typeof key == 'string') {
+    prefix = key;
+  } else if (Array.isArray(key) && key.length > 0) {
+    prefix = key[0];
+    postfix = key[1] ? key[1] : '';
+    tmpDynamic = true;
+  } else {
+    throw 'ERROR_KEY_INVALID';
+  }
+
+  key = prefix + postfix;
+  var text = T[key];
+
+  if (config.defaultTexts && config.defaultTexts[prefix] && typeof config.defaultTexts[prefix].text == 'string') {
+    defaultText = config.defaultTexts[prefix].text;
+    optional = config.defaultTexts[prefix].optional === true ? true : false;
+    dynamic = config.defaultTexts[prefix].dynamic === true ? true : false;
+  } else if (typeof tmpDefaultText == 'string') {
+    tmpDynamic = dynamic;
+    config.defaultTexts[prefix] = {
+      text: tmpDefaultText,
+      optional: optional,
+      dynamic: dynamic
+    };
+    (0, _autoupdateDefaultTexts.isAutoupdateDefaultTextsEnabled)() && (0, _autoupdateDefaultTexts.default)(config.defaultTexts[prefix]);
+  }
+
+  if (isDev) {
+    if (dynamic != tmpDynamic) throw 'ERROR_WRONG_KEY_USE_OR_DYNAMIC_KEY_DECLARATION [required_textkey1_static] [' + prefix + ']';
+    if (typeof defaultText == 'undefined') throw 'ERROR_NO_DEFAULT_DEFINED [' + prefix + ']';
+    if (typeof tmpDefaultText == 'string' && defaultText != tmpDefaultText) throw 'ERROR_DEFAULT_TEXT_CONFLICT [' + prefix + ']';
+  }
+
+  (dynamic != tmpDynamic || typeof defaultText == 'undefined' || optional) && (defaultText = '');
+
+  if (optional) {
+    text = text === undefined ? typeof tmpDefaultText === 'string' ? tmpDefaultText : '' : text;
+  }
+
+  return {
+    text: text,
+    key: key,
+    defaultText: defaultText
+  };
 };
+
+exports.default = _default;
