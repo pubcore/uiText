@@ -2,13 +2,15 @@ import replace from './replace'
 import {isDefaultTextModeEnabled} from './validateTextkey'
 import uiTextV2 from './uiTextV2'
 
+var isDev = false
+
+export const initEnvIsDev = envIsDev => (isDev = envIsDev)
 export {initLogMissingTextkey} from './logMissingTextkey'
 export {initDefaultTexts} from './validateTextkey'
 export {initAutoupdateDefaultTexts} from './autoupdateDefaultTexts'
 
 export default (T, key, arg3, arg4) => {
 	if (isDefaultTextModeEnabled()) {
-		var isDev = typeof process.env.NODE_ENV == 'string' && process.env.NODE_ENV.search('dev') != -1
 		return uiTextV2(T, key, arg3, arg4, isDev)
 	} else {
 		return replace({

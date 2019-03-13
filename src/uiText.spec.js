@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import FakeXMLHTTPRequests from 'fakexmlhttprequest'
-import uiText, {initLogMissingTextkey,initDefaultTexts} from './uiText'
+import uiText, {initLogMissingTextkey,initDefaultTexts,initEnvIsDev} from './uiText'
 import {isMissingTextkey} from './logMissingTextkey'
 import defaultTexts from './test/defaultTexts.json'
 
@@ -53,6 +53,7 @@ describe('uiText, ' + new Date(), () => {
 
 	it('use component default text config mode, if default text data is set', () => {
 		initDefaultTexts(defaultTexts)
+		initEnvIsDev(true)
 		expect(uiText({'required_textkey1_static':'is configured {replacement}'},'required_textkey1_static',{replacement:'replacement'})).to.be.equal('is configured replacement')
 		expect(uiText({},'required_textkey1_static',{replacement:'replacement'})).to.be.equal('required textkey1 static replacement')
 		expect(uiText({},'required_textkey1_static','required textkey1 static {replacement}',{replacement:'replacement'})).to.be.equal('required textkey1 static replacement')
@@ -67,6 +68,7 @@ describe('uiText, ' + new Date(), () => {
 
 	it('test optional texts, use component default text config mode, if default text data is set', () => {
 		initDefaultTexts(defaultTexts)
+		initEnvIsDev(true)
 		expect(uiText({'optional_textkey1_prefix':'is configured {replacement}'},'optional_textkey1_prefix',{replacement:'replacement'})).to.be.equal('is configured replacement')
 		expect(uiText({},'optional_textkey1_prefix',{replacement:'replacement'})).to.be.equal('')
 		expect(uiText({}, 'optional_textkey1_prefix', 'optional textkey1 {postfix}', {postfix: 'postfix'})).to.equal('optional textkey1 postfix')

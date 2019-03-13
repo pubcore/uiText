@@ -41,7 +41,7 @@ export default ({T,key,defaultText,isDev}) => {
 			optional,
 			dynamic
 		}
-		isAutoupdateDefaultTextsEnabled() && autoupdateDefaultTexts(prefix,config.defaultTexts[prefix])
+		isDev && isAutoupdateDefaultTextsEnabled() && autoupdateDefaultTexts(prefix,config.defaultTexts[prefix])
 	}
 
 
