@@ -16,7 +16,7 @@ export const initAutoupdateDefaultTexts = c => {
 
 export const isAutoupdateDefaultTextsEnabled = () => typeof config.postUri==='string' && config.postUri.length > 0
 
-export default (ndt) => {
-	newDefaultText = ndt
+export default (prefix,spec) => {
+	newDefaultText[prefix] = spec
 	postDefaultTexts()
 }

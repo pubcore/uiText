@@ -37,8 +37,8 @@ var isAutoupdateDefaultTextsEnabled = function isAutoupdateDefaultTextsEnabled()
 
 exports.isAutoupdateDefaultTextsEnabled = isAutoupdateDefaultTextsEnabled;
 
-var _default = function _default(ndt) {
-  newDefaultText = ndt;
+var _default = function _default(prefix, spec) {
+  newDefaultText[prefix] = spec;
   postDefaultTexts();
 };
 

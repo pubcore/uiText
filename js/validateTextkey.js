@@ -65,7 +65,7 @@ var _default = function _default(_ref) {
       optional: optional,
       dynamic: dynamic
     };
-    (0, _autoupdateDefaultTexts.isAutoupdateDefaultTextsEnabled)() && (0, _autoupdateDefaultTexts.default)(config.defaultTexts[prefix]);
+    (0, _autoupdateDefaultTexts.isAutoupdateDefaultTextsEnabled)() && (0, _autoupdateDefaultTexts.default)(prefix, config.defaultTexts[prefix]);
   }
 
   if (isDev) {
