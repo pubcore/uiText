@@ -18,7 +18,6 @@ describe('validateTextkey, ' + new Date(), () => {
 		expect(isDefaultTextModeEnabled()).to.be.true
 	})
 
-	//validateTextkey({T:object,key:string or array,defaultText:optional string,isDev:optional boolean})
 	it('validateTextkey(key not a string) throws ERROR_KEY_INVALID', () => {
 		expect(
 			() => validateTextkey({})

@@ -1,6 +1,5 @@
 import {expect} from 'chai'
-import defaultTexts from './test/defaultTexts.json'
-import autoupdateDefaultTextsEnabled, {initAutoupdateDefaultTexts,isAutoupdateDefaultTextsEnabled} from './autoupdateDefaultTexts'
+import {initAutoupdateDefaultTexts,isAutoupdateDefaultTextsEnabled} from './autoupdateDefaultTexts'
 
 describe('autoupdateDefaultTexts, ' + new Date(), () => {
 
@@ -19,15 +18,4 @@ describe('autoupdateDefaultTexts, ' + new Date(), () => {
 		expect(isAutoupdateDefaultTextsEnabled()).to.be.true
 		initAutoupdateDefaultTexts({postUri: ''})
 	})
-	// it('autoupdateDefaultTextsEnabled() should post defaultTexts data', () => {
-	// 	var dt = {
-	// 		...defaultTexts() ,
-	// 		unittest_textkey: {
-	// 			text: 'unittest {replacement}',
-	// 			optional: false,
-	// 			dynamic: true
-	// 		}
-	// 	}
-	// 	return autoupdateDefaultTextsEnabled(dt).then(res => expect.equal(200, res.statusCode))
-	// })
 })
