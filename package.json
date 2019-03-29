@@ -6,7 +6,7 @@
   "scripts": {
     "test": "set NODE_ENV=dev && mocha --require @babel/register src/**/*.spec.js",
     "test-with-coverage": "set NODE_ENV=dev && nyc --reporter=text mocha --require @babel/register src/**/*.spec.js",
-    "build": "babel src --out-dir js --ignore spec.js",
+    "build": "babel src --out-dir js --ignore src/*.spec.js",
     "pack": "npm run build && webpack --mode=production",
     "prepublish": "npm run build"
   },

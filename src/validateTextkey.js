@@ -46,7 +46,7 @@ export default ({T,key,defaultText,isDev}) => {
 
 
 	if (isDev) {
-		if (dynamic != tmpDynamic) 	throw 'ERROR_WRONG_KEY_USE_OR_DYNAMIC_KEY_DECLARATION [required_textkey1_static] ['+prefix+']'
+		if (dynamic != tmpDynamic) 	throw 'ERROR_WRONG_KEY_USE_OR_DYNAMIC_KEY_DECLARATION ['+prefix+']'
 		if (typeof defaultText == 'undefined') throw 'ERROR_NO_DEFAULT_DEFINED ['+prefix+']'
 		if (typeof tmpDefaultText == 'string' && defaultText != tmpDefaultText) 	throw 'ERROR_DEFAULT_TEXT_CONFLICT ['+prefix+']'
 	}
