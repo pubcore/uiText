@@ -1,61 +1,69 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
-exports.initLogMissingTextkey = exports.isMissingTextkey = undefined;
+exports["default"] = exports.initLogMissingTextkey = exports.isMissingTextkey = void 0;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _pubcoreHttp = _interopRequireDefault(require("pubcore-http"));
 
-var _pubcoreHttp = require('pubcore-http');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _pubcoreHttp2 = _interopRequireDefault(_pubcoreHttp);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var missingTextkeys = {},
     missingTextkeyData = {},
     missingTextkeyTimer,
     config = {
-	postUri: '',
-	timeout: 3000
+  postUri: '',
+  timeout: 3000
 },
     requestCount = 0;
 
 var postStatus = function postStatus() {
-	return (0, _pubcoreHttp2.default)(config.postUri, missingTextkeyData).then(function () {
-		missingTextkeyData = {};
-		missingTextkeys = {};
-	});
+  return (0, _pubcoreHttp["default"])(config.postUri, missingTextkeyData).then(function () {
+    missingTextkeyData = {};
+    missingTextkeys = {};
+  });
 };
 
 var startPostMissingTextkeyTimer = function startPostMissingTextkeyTimer() {
-	if (missingTextkeyTimer) {
-		clearTimeout(missingTextkeyTimer);
-	}
-	missingTextkeyTimer = setTimeout(postStatus, config.timeout);
+  if (missingTextkeyTimer) {
+    clearTimeout(missingTextkeyTimer);
+  }
+
+  missingTextkeyTimer = setTimeout(postStatus, config.timeout);
 };
 
-var isMissingTextkey = exports.isMissingTextkey = function isMissingTextkey(key) {
-	return missingTextkeys[key] || false;
+var isMissingTextkey = function isMissingTextkey(key) {
+  return missingTextkeys[key] || false;
 };
 
-var initLogMissingTextkey = exports.initLogMissingTextkey = function initLogMissingTextkey(c) {
-	config = _extends({}, config, c);
+exports.isMissingTextkey = isMissingTextkey;
+
+var initLogMissingTextkey = function initLogMissingTextkey(c) {
+  config = _objectSpread({}, config, c);
 };
 
-exports.default = function (key, replacement, defaultText) {
-	if (!missingTextkeys[key]) {
-		missingTextkeys[key] = true;
-		missingTextkeyData[key] = (defaultText || key) + (replacement ? ' ' + JSON.stringify(replacement) : '');
+exports.initLogMissingTextkey = initLogMissingTextkey;
 
-		if (config.postUri && requestCount < 1) {
-			requestCount++;
-			if (config.timeout === 0) {
-				postStatus();
-			} else if (config.timeout > 0) {
-				startPostMissingTextkeyTimer();
-			}
-		}
-	}
+var _default = function _default(key, replacement, defaultText) {
+  if (!missingTextkeys[key]) {
+    missingTextkeys[key] = true;
+    missingTextkeyData[key] = (defaultText || key) + (replacement ? ' ' + JSON.stringify(replacement) : '');
+
+    if (config.postUri && requestCount < 1) {
+      requestCount++;
+
+      if (config.timeout === 0) {
+        postStatus();
+      } else if (config.timeout > 0) {
+        startPostMissingTextkeyTimer();
+      }
+    }
+  }
 };
+
+exports["default"] = _default;

@@ -1,0 +1,81 @@
+"use strict";
+
+var _chai = require("chai");
+
+var _fakexmlhttprequest = _interopRequireDefault(require("fakexmlhttprequest"));
+
+var _uiText = _interopRequireWildcard(require("./uiText"));
+
+var _logMissingTextkey = require("./logMissingTextkey");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var T = {
+  foo: 'bar'
+};
+var requests = [];
+
+global.XMLHttpRequest = function () {
+  var r = new _fakexmlhttprequest["default"](arguments);
+  requests.push(r);
+  return r;
+};
+
+describe('uiText, ' + new Date(), function () {
+  beforeEach(function () {
+    requests = [];
+  });
+  it('logs text-keys which did not exist', function () {
+    (0, _uiText["default"])(T, 'thisKeyDoesNotExist');
+    (0, _chai.expect)((0, _logMissingTextkey.isMissingTextkey)('thisKeyDoesNotExist')).to.be["true"];
+  });
+  it('returns text of type string', function () {
+    (0, _chai.expect)((0, _uiText["default"])({
+      k: ''
+    }, 'k')).to.equal('');
+    (0, _chai.expect)((0, _uiText["default"])({
+      k: 1
+    }, 'k')).to.equal('1');
+    (0, _chai.expect)((0, _uiText["default"])({
+      k: 0
+    }, 'k')).to.equal('0');
+    (0, _chai.expect)((0, _uiText["default"])({
+      k: null
+    }, 'k')).to.equal('null');
+  });
+  it('returns text with replaced replacements', function () {
+    (0, _chai.expect)((0, _uiText["default"])({
+      k: 'Text with replacement {count}.'
+    }, 'k', {
+      count: 5
+    })).to.equal('Text with replacement 5.');
+  });
+  it('must return given default text, if text is undefined', function () {
+    (0, _chai.expect)((0, _uiText["default"])({}, 'k', 'a default text')).to.equal('a default text');
+  });
+  it('must return given default text with replaced replacement', function () {
+    (0, _chai.expect)((0, _uiText["default"])({}, 'k', 'a default text with replacement {count}.', {
+      count: 123
+    })).to.match(/123/);
+  });
+  it('must return text with replaced replacements, in spite of given default text', function () {
+    (0, _chai.expect)((0, _uiText["default"])({
+      k: 'a text with replacement {count}.'
+    }, 'k', 'a default text {count}', {
+      count: 5
+    })).to.equal('a text with replacement 5.');
+  });
+  it('http post missing textkey data, if corresponding uri is given', function () {
+    (0, _uiText.initLogMissingTextkey)({
+      postUri: 'https://xyz.com/',
+      timeout: 0
+    });
+    (0, _uiText["default"])({}, 'aKey', 'a default text {count}', {
+      count: 5
+    });
+    (0, _chai.expect)(requests.length).to.equal(1);
+    (0, _chai.expect)(JSON.parse(requests[0].requestBody).aKey).to.equal('a default text {count} {"count":5}');
+  });
+});
