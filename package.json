@@ -23,16 +23,17 @@
     "pubcore-http": "^1.0.8"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/register": "^7.5.5",
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/register": "^7.7.7",
     "chai": "^4.2.0",
-    "eslint": "^6.2.2",
+    "eslint": "^6.8.0",
     "fakexmlhttprequest": "0.0.1",
-    "mocha": "^6.2.0",
-    "webpack": "^4.39.3"
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0",
+    "webpack": "^4.41.5"
   },
   "babel": {
     "presets": [
