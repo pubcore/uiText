@@ -1,3 +1,4 @@
+# DEPRECATED, please use [pubcore/ui-text instead](https://www.npmjs.com/package/@pubcore/ui-text)
 [![Build Status](https://travis-ci.org/pubcore/uiText.svg?branch=master)](https://travis-ci.org/pubcore/uiText)
 
 # Map keys to text with replacement-tag support
