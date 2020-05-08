@@ -1,7 +1,7 @@
 {
   "name": "pubcore-ui-text",
   "version": "1.0.13",
-  "description": "map text-keys to text",
+  "description": "DEPRECATED; moved to: @pubcore/ui-text",
   "main": "js/uiText.js",
   "scripts": {
     "test": "mocha --require @babel/register src/**/*.spec.js",
