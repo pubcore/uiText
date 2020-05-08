@@ -1,6 +1,6 @@
 {
   "name": "pubcore-ui-text",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "map text-keys to text",
   "main": "js/uiText.js",
   "scripts": {
